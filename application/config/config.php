@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 $heroku             = "https://ify-absen.herokuapp.com/";
 $lokal              = "https://192.168.43.253/app-absen/";
-$config['base_url'] = $heroku;
+$config['base_url'] = "https://ify-absen.herokuapp.com/";
 
 /*
 |--------------------------------------------------------------------------
