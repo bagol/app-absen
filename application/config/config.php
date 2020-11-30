@@ -23,7 +23,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
  */
-$config['base_url'] = 'https://192.168.43.253/app-absen/';
+$heroku             = "https://ify-absen.herokuapp.com/";
+$lokal              = "https://192.168.43.253/app-absen/";
+$config['base_url'] = $heroku;
 
 /*
 |--------------------------------------------------------------------------
