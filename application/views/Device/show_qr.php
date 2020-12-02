@@ -24,13 +24,14 @@
                         <div class="row justify-content-center">
                             <div class="col-md-5 col-lg-4">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class=" font-weight-light my-4">Monitor 1</h3></div>
+                                    <div class="card-header"><h3 class=" font-weight-light my-4"><?=$this->session->userdata("device_name") ?></h3></div>
+                                    <input type="hidden" id="device-id" value="<?=$this->session->userdata("device") ?>">
                                     <div class="card-body">
                                       <h4 class="text-center mb-2">Scann disini!!!</h4>
-                                          <center><div id="qrcode" class="text-center pl-1"></div></center>
+                                          <div id="qrcode" class="text-center pl-1"></div>
                                     </div>
                                     <div class="card-footer">
-                                      Lokasi : Gate 1
+                                      Lokasi : <?=$this->session->userdata("lokasi") ?>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +57,7 @@
         <script src="<?=base_url("assets/js/jquery.js") ?>" ></script>
         <script src="<?=base_url("assets/js/bootstrap.js") ?>" ></script>
         <script src="<?=base_url("assets/sb-admin/dist/js/scripts.js") ?>"></script>
-        <script src="<?=base_url("assets/js/qrcode.min.js") ?>"></script>
+        <script src="<?=base_url("assets/js/qrcode.js") ?>"></script>
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
         <script src="<?=base_url("assets/js/script.js") ?>"></script>
     </body>

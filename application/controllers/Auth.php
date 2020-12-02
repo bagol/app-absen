@@ -53,8 +53,9 @@ class Auth extends CI_Controller
 
     public function device()
     {
-        extract($this->input->post());
+        $this->load->view("Auth/device");
     }
+
     public function cekSession()
     {
         if ($this->session->userdata("level") === "admin") {
@@ -63,6 +64,28 @@ class Auth extends CI_Controller
             redirect("Karyawan");
         } else {
             redirect("Auth");
+        }
+    }
+
+    public function cekDevice()
+    {
+        $this->load->model("Device_model");
+        $deviceCode     = $this->input->post("kode");
+        $deviceLocation = $this->input->post("lokasi");
+        $device         = $this->Device_model->find(["id" => $deviceCode, "lokasi" => $deviceLocation]);
+        if ($device->num_rows() > 0) {
+            $device = $device->result_array();
+            $data   = [
+                "device"      => $deviceCode,
+                "lokasi"      => $deviceLocation,
+                "device_name" => $device[0]["nama"],
+            ];
+            $this->session->set_userdata($data);
+            var_dump($data);
+            redirect("Device");
+        } else {
+            $this->session->set_flashdata("msg_err", "Device tidak terdaftar");
+            redirect("Auth/Device");
         }
     }
 }

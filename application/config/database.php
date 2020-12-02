@@ -75,11 +75,11 @@ $query_builder = true;
 
 $db['default'] = array(
     'dsn'          => '',
-    'hostname'     => 'sql12.freemysqlhosting.net',
-    'username'     => 'sql12379348',
-    'password'     => 'I47HewUmXq',
-    'database'     => 'sql12379348',
-    'dbdriver'     => 'mysqli',
+    'hostname'     => 'localhost', // lokal = localhost, heroku = 'sql12.freemysqlhosting.net'
+     'username'     => 'root', //heroku = 'sql12379348'
+     'password'     => '', // heroku = 'I47HewUmXq'
+     'database'     => 'absen', // heroku = 'sql12379348'
+     'dbdriver'     => 'mysqli',
     'dbprefix'     => '',
     'pconnect'     => false,
     'db_debug'     => true, // (ENVIRONMENT !== 'production'),

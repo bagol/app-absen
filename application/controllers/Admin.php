@@ -79,10 +79,17 @@ class Admin extends CI_Controller
         $this->load->view("layout/footer");
     }
 
-    public function absen($shift)
+    public function absen($shift = null)
     {
-        $data['title'] = "Absen " . $shift;
-        $data['bc']    = "/Absen " . $shift;
+
+        if ($shift == 1) {
+            $data['title'] = "Absen " . "pagi";
+            $data['bc']    = "/Absen " . "pagi";
+        } else {
+            $data['title'] = "Absen " . "siang";
+            $data['bc']    = "/Absen " . "siang";
+        }
+        $data['shift'] = $shift;
         $this->load->view("layout/header", $data);
         $this->load->view("absen/scanner");
         $this->load->view("layout/footer");

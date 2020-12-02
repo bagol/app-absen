@@ -11,6 +11,9 @@ class Device extends CI_Controller
     }
     public function index()
     {
+        if ($this->session->userdata("device") == null) {
+            redirect("Auth/device");
+        }
         $this->load->view("Device/show_qr");
     }
 

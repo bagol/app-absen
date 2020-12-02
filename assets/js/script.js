@@ -9,24 +9,24 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // getQr("test");
   $.get("Device/getUniqCode", function (data) {
     let hasil = JSON.parse(data);
     hasil = parseInt(hasil.id) + 1;
-    console.log(hasil);
-    // let tampil =
-    //   document.getElementById("id_device").value + "-" + hasil.toString();
-    getQr(hasil.toString());
+
+    let tampil =
+      document.getElementById("device-id").value + "-" + hasil.toString();
+    console.log(tampil);
+    getQr(tampil);
   });
 
   function updateQr() {
     $.get("Device/getUniqCode", function (data) {
       let hasil = JSON.parse(data);
       hasil = parseInt(hasil.id) + 1;
-      // let tampil =
-      //   document.getElementById("id_device").value + "-" + hasil.toString();
-      // console.log("qr berhasil di update");
-      qr.makeCode(hasil.toString());
+      let tampil =
+        document.getElementById("device-id").value + "-" + hasil.toString();
+      console.log("qrcode di update");
+      qr.makeCode(tampil);
     });
   }
 
@@ -40,6 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
   channel.bind("my-event", function (data) {
     if (data.status == "update") {
       console.log("di update " + data);
+      console.log("terupdate");
       updateQr();
     }
   });

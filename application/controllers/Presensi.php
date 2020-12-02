@@ -9,11 +9,6 @@ class Presensi extends CI_Controller
         $this->load->model("Shift_model");
     }
 
-    public function index()
-    {
-
-    }
-
     public function absen($shift = null)
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -21,24 +16,24 @@ class Presensi extends CI_Controller
             $input  = file_get_contents('php://input');
             $input  = json_decode($input);
             $insert = [
-                "id"      => "",
-                "nik"     => $input->nik,
-                "tanggal" => date("Y-m-d"),
-                "jam"     => date("H:i:s"),
-                "device"  => $input->device,
+                "id_presensi" => "",
+                "nik"         => $input->nik,
+                "tanggal"     => date("Y-m-d"),
+                "jam"         => date("H:i:s"),
+                "device"      => $input->device,
             ];
             $Shift      = $this->Shift_model->find(["id" => $shift])->result_array();
             $jam_masuk  = $Shift[0]['jam_masuk'];
             $jam_keluar = $Shift[0]['jam_keluar'];
             $nama_shift = $Shift[0]['shift'];
             if ($shift == "1") {
-                $masuk = ['nik' => $input->nik, 'tanggal' => date("Y-m-d"), 'status' => "masuk"];
+                $masuk = ['nik' => $insert['nik'], 'tanggal' => date("Y-m-d"), 'status' => "masuk"];
                 if ($this->Absen_model->find($masuk)->num_rows() > 0) {
                     // ABSEN PULANG
                     // cek apakah sudah waktu pulang atau belum
                     if (strtotime($jam_keluar) < time()) {
                         // cek apakah user sudah absen pulang atau blm
-                        $pulang = ['nik' => $absen[0], 'tanggal' => date("Y-m-d"), 'status' => "pulang"];
+                        $pulang = ['nik' => $insert["nik"], 'tanggal' => date("Y-m-d"), 'status' => "pulang"];
                         if ($this->Absen_model->find($pulang)->num_rows() > 0) {
                             // jika sudah absen pulang
                             echo json_encode(["massage" => "anda sudah absen pulang"]);
@@ -46,7 +41,7 @@ class Presensi extends CI_Controller
                             // insert absen pulang
                             $insert['keterangan'] = 'absen pulang';
                             $insert['status']     = 'pulang';
-                            if ($this->Absen_model->create($insert)) {
+                            if ($this->Absen_model->new($insert)) {
                                 echo json_encode(["message" => "absen pulang berhasil"]);
                                 $this->pusher();
                             } else {
@@ -60,14 +55,14 @@ class Presensi extends CI_Controller
                     // ABSEN MASUK
                     // cek apakah user telat atau tepat waktu
                     if (time() > strtotime(date("Y-m-d") . " " . $jam_masuk)) {
-                        $insert['keteranagan'] = "telat";
+                        $insert['keterangan'] = "telat";
                     } else {
-                        $insert['keteranagan'] = 'tepat waktu';
+                        $insert['keterangan'] = 'tepat waktu';
 
                     }
-                    $insert['status'] = 'telat';
+                    $insert['status'] = 'masuk';
                     // insert data absen masuk
-                    if ($this->Absen_model->create($insert)) {
+                    if ($this->Absen_model->new($insert)) {
                         echo json_encode(["message" => "absen masuk berhasil"]);
                         $this->pusher();
                     } else {
@@ -82,7 +77,7 @@ class Presensi extends CI_Controller
                     // cek apakah sudah waktu pulang atau belum
                     if (strtotime($jam_keluar) < time()) {
                         // cek apakah user sudah absen pulang atau blm
-                        $pulang = ['nik' => $absen[0], 'tanggal' => date("Y-m-d"), 'status' => "pulang"];
+                        $pulang = ['nik' => $absen["nik"], 'tanggal' => date("Y-m-d"), 'status' => "pulang"];
                         if ($this->Absen_model->find($pulang)->num_rows() > 0) {
                             // jika sudah absen pulang
                             echo json_encode(["massage" => "anda sudah absen pulang"]);
@@ -90,7 +85,7 @@ class Presensi extends CI_Controller
                             // insert absen pulang
                             $insert['keterangan'] = 'absen pulang';
                             $insert['status']     = 'pulang';
-                            if ($this->Absen_model->create($insert)) {
+                            if ($this->Absen_model->new($insert)) {
                                 echo json_encode(["message" => "absen pulang berhasil"]);
                                 $this->pusher();
                             } else {
@@ -104,9 +99,9 @@ class Presensi extends CI_Controller
                     // ABSEN MASUK
                     // cek apakah user telat atau tepat waktu
                     if (time() > strtotime(date("Y-m-d") . " " . $jam_masuk)) {
-                        $insert['keteranagan'] = "telat";
+                        $insert['keterangan'] = "telat";
                     } else {
-                        $insert['keteranagan'] = 'tepat waktu';
+                        $insert['keterangan'] = 'tepat waktu';
 
                     }
                     $insert['status'] = 'masuk';
@@ -137,6 +132,25 @@ class Presensi extends CI_Controller
         );
         $data = ["status" => "update"];
         $pusher->trigger('absen', 'my-event', $data);
+    }
+
+    public function laporanBulan($bulan = null)
+    {
+        if ($bulan == null) {
+            $data = $this->Absen_model->find(["month(tanggal)" => date("m")])->result_array();
+            echo json_encode($data);
+        } else {
+            $data = $this->Absen_model->absenBulanan($bulan)->result_array();
+            echo json_encode($data);
+        }
+    }
+
+    public function laporanPerTanggal()
+    {
+        $input = file_get_contents('php://input');
+        $input = json_decode($input);
+        $data  = $this->Absen_model->perTanggal($input->awal, $input->akhir);
+        echo json_encode($data->result_array());
     }
 
 }

@@ -29,4 +29,18 @@ class Absen_model extends CI_Model
     {
         return $this->db->query('SELECT * FROM `presensi` GROUP by id_presensi DESC limit 1');
     }
+
+    public function perTanggal($awal, $akhir)
+    {
+        $this->db->where("tanggal >=", $awal);
+        $this->db->where("tanggal <=", $akhir);
+        return $this->db->get("presensi");
+    }
+
+    public function absenBulanan($bulan, $nik = null)
+    {
+        if ($nik == null) {
+            return $this->db->query("SELECT count(*) as jumlah_hadir,b.username,a.nik FROM presensi a join user b on a.nik=b.nik where status = 'masuk' and month(tanggal) = $bulan GROUP BY a.nik");
+        }
+    }
 }

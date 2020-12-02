@@ -15,7 +15,7 @@
     </div>
   </div>
 </div>
-
+<script src="<?=base_url("assets/js/instascan.min.js") ?>"></script>
 <script>
 window.addEventListener("DOMContentLoaded", () => {
   let scanner = new Instascan.Scanner({
@@ -23,7 +23,8 @@ window.addEventListener("DOMContentLoaded", () => {
     mirror: false,
   });
   scanner.addListener("scan", function (content) {
-    alert(content);
+    let code = content.split("-");
+    absen(code[0]);
   });
   Instascan.Camera.getCameras()
     .then(function (cameras) {
@@ -36,5 +37,20 @@ window.addEventListener("DOMContentLoaded", () => {
     .catch(function (e) {
       console.error("terjadi kesalahan :" + e);
     });
+
+    const absen = (device1) => {
+      const base_url = `<?=base_url("Presensi/absen/") ?><?=$shift ?>`;
+      fetch(base_url,{
+					method : 'POST',
+					headers : {
+						'Content-type' : 'application/json'
+					},
+					body : JSON.stringify({'device' : device1,'nik':<?=$this->session->userdata("nik") ?>})
+				}
+			)
+			.then(res => res.text())
+			.then(teks => alert(teks))
+			.catch(err => alert(err));
+    }
 });
 </script>
