@@ -207,4 +207,20 @@ class User extends CI_Controller
         $this->session->set_userdata($this->input->post());
         $this->update($id);
     }
+
+    public function updatePassword($nik = null)
+    {
+        if ($nik !== null) {
+            $data = [
+                'password' => password_hash($this->input->post("password"), PASSWORD_BCRYPT, ['const' => 12]),
+            ];
+            if ($this->User_model->edit($nik, $data)) {
+                $this->session->set_flashdata("msg_scc", "Password berhasil diubah");
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        } else {
+            $this->session->set_flashdata("msg_err", "terjadi kesalahan : nik tidak boleh kosong");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
 }

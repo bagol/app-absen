@@ -97,11 +97,7 @@ class Admin extends CI_Controller
 
     public function laporan_pegawai()
     {
-        $data['title'] = "Laporan Absen Pegawai";
-        $data['bc']    = "/Laporan Absen";
-        $this->load->view("layout/header", $data);
-        $this->load->view("Report/pegawai");
-        $this->load->view("layout/footer");
+        redirect("Presensi/laporanBulan");
     }
 
     public function profile()

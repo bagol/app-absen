@@ -85,8 +85,8 @@
             </a>
             <div class="collapse" id="Absen" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="<?=base_url("Admin/absen/pagi") ?>">Pagi</a>
-                    <a class="nav-link" href="<?=base_url("Admin/absen/siang") ?>">Siang</a>
+                    <a class="nav-link" href="<?=base_url("Karyawan/absen/pagi") ?>">Pagi</a>
+                    <a class="nav-link" href="<?=base_url("Karyawan/absen/siang") ?>">Siang</a>
                 </nav>
             </div>
         <div class="sb-sidenav-menu-heading">Menu</div>

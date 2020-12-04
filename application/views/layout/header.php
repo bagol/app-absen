@@ -6,9 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SI-Absen Total Buah segar</title>
+        <title>SIA Total Buah Segar - <?=$title ?></title>
         <link href="<?=base_url("assets/sb-admin/dist/css/styles.css") ?>" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
         <link href="<?=base_url("assets/css/dataTable.bootstrap4.css") ?>" rel="stylesheet" crossorigin="anonymous" />
+        <link href="<?=base_url("assets/css/buttons.dataTables.min.css") ?>" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">

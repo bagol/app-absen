@@ -18,10 +18,12 @@
               </select>
             </div>
           </div>
+          <form action="">
         <div id="pilih" class="col-sm-10" style="display:none;"></div>
           <div class="col-sm-2">
             <button id="cari" class="btn btn-primary"> <i class="fa fa-search"></i> Cari</button>
           </div>
+          </form>
         </div>
     </div>
   </div>
@@ -204,7 +206,7 @@
               <tr>
                 <td>${++i}</td>
                 <td>${data[isi].username}</td>
-                <td>${data[isi].jumlah_hadir}</td>
+                <td>${data[isi].hadir}</td>
                 <td><a href="" class="btn btn-success"><i class="fa fa-search"></i>view</a></td>
                 </tr>
             `;

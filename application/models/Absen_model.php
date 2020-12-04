@@ -32,15 +32,18 @@ class Absen_model extends CI_Model
 
     public function perTanggal($awal, $akhir)
     {
-        $this->db->where("tanggal >=", $awal);
-        $this->db->where("tanggal <=", $akhir);
-        return $this->db->get("presensi");
+        return $this->db->query("select a.nik,a.username,count(b.id_presensi) as hadir from user a left join presensi b on a.nik=b.nik and status='masuk' and tanggal >= '$awal' and tanggal <= '$akhir' group by a.nik,a.username");
     }
 
     public function absenBulanan($bulan, $nik = null)
     {
         if ($nik == null) {
-            return $this->db->query("SELECT count(*) as jumlah_hadir,b.username,a.nik FROM presensi a join user b on a.nik=b.nik where status = 'masuk' and month(tanggal) = $bulan GROUP BY a.nik");
+            return $this->db->query("select a.nik,a.username,count(b.id_presensi) as hadir from user a left join presensi b on a.nik=b.nik and status='masuk' and month(tanggal) = $bulan group by a.nik,a.username");
         }
+    }
+
+    public function detailAbsen($nik, $bulan)
+    {
+        return $this->db->query("select a.username,b.*,c.nama from user a join presensi b on a.nik=b.nik and month(tanggal) = $bulan join device c on b.device=c.id where a.nik = $nik");
     }
 }

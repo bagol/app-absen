@@ -137,20 +137,53 @@ class Presensi extends CI_Controller
     public function laporanBulan($bulan = null)
     {
         if ($bulan == null) {
-            $data = $this->Absen_model->find(["month(tanggal)" => date("m")])->result_array();
-            echo json_encode($data);
+            $data['datas'] = $this->Absen_model->absenBulanan(date("m"))->result_array();
+
+            $data['title'] = "Laporan Absen Pegawai";
+            $data['bc']    = "/Laporan Absen";
+            $data['ket']   = "Bulan " . date("m") . " Tahun " . date("Y");
+            $this->load->view("layout/header", $data);
+            $this->load->view("Report/laporan");
+            $this->load->view("layout/footer");
         } else {
-            $data = $this->Absen_model->absenBulanan($bulan)->result_array();
-            echo json_encode($data);
+            $data['datas'] = $this->Absen_model->absenBulanan($bulan)->result_array();
+
+            $data['title'] = "Laporan Absen Pegawai";
+            $data['bc']    = "/Laporan Absen";
+            $data['ket']   = "Bulan " . $bulan . " Tahun " . date("Y");
+            $this->load->view("layout/header", $data);
+            $this->load->view("Report/laporan");
+            $this->load->view("layout/footer");
         }
     }
 
     public function laporanPerTanggal()
     {
-        $input = file_get_contents('php://input');
-        $input = json_decode($input);
-        $data  = $this->Absen_model->perTanggal($input->awal, $input->akhir);
-        echo json_encode($data->result_array());
+        $data['datas'] = $this->Absen_model->perTanggal($this->input->post("awal"), $this->input->post("akhir"))->result_array();
+
+        $data['title'] = "Laporan Absen Pegawai";
+        $data['bc']    = "/Laporan Absen";
+        $data['ket']   = "Tanggal " . $this->input->post("awal") . " s/d " . $this->input->post("akhir");
+        $this->load->view("layout/header", $data);
+        $this->load->view("Report/laporan");
+        $this->load->view("layout/footer");
+    }
+
+    public function detailAbsen()
+    {
+        $nik = $this->input->post("nik");
+        if ($nik !== null) {
+            $bulan         = $this->input->post("bulan");
+            $data['datas'] = $this->Absen_model->detailAbsen($nik, $bulan)->result_array();
+            $data['title'] = "Detail Absen Pegawai";
+            $data['bc']    = "/Detail Absen pegawai";
+            $this->load->view("layout/header", $data);
+            $this->load->view("Report/detail_absen");
+            $this->load->view("layout/footer");
+        } else {
+            $this->session->set_flashdata("msg_err", "nik tidak boleh kosong");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
     }
 
 }

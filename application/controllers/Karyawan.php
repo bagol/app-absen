@@ -28,4 +28,20 @@ class Karyawan extends CI_Controller
         $this->load->view("layout/footer");
         $this->load->view("User/modal");
     }
+
+    public function absen($shift = null)
+    {
+
+        if ($shift == 1) {
+            $data['title'] = "Absen " . "pagi";
+            $data['bc']    = "/Absen " . "pagi";
+        } else {
+            $data['title'] = "Absen " . "siang";
+            $data['bc']    = "/Absen " . "siang";
+        }
+        $data['shift'] = $shift;
+        $this->load->view("layout/header", $data);
+        $this->load->view("absen/scanner");
+        $this->load->view("layout/footer");
+    }
 }
