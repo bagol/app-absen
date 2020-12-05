@@ -5,7 +5,7 @@
         Rekap Laporan Pegawai
       </div>
       <div class="card-body">
-      <form action="<?=base_url("Presensi/detailAbsen/") ?>" method="post"></form>
+      <form action="<?=base_url("Presensi/detailAbsen/") ?>" method="post">
         <div class="row">
           <div class="col-sm-10">
             <div class="input-group mb-3">
@@ -28,9 +28,10 @@
               </select>
             </div>
           </div>
+            <input type="hidden" name="nik" value="<?=$nik ?>">
             <div class="col-sm-2"><button id="cari" type="submit" class="btn btn-primary "> <i class="fa fa-search"></i>Cari</button></div>
-          </form>
         </div>
+          </form>
       </div>
     </div>
   </div>
@@ -77,7 +78,7 @@
                         </tr>
                       <?php endforeach; ?>
                       <tr>
-                        <th colspan="7" id="keterangan" class="text-center">Laporan : </th>
+                        <th colspan="7" id="keterangan" class="text-center">Laporan : <?=$ket ?></th>
                         <td style="display:none"></td>
                         <td style="display:none"></td>
                         <td style="display:none"></td>

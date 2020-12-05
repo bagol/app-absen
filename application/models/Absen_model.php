@@ -44,6 +44,6 @@ class Absen_model extends CI_Model
 
     public function detailAbsen($nik, $bulan)
     {
-        return $this->db->query("select a.username,b.*,c.nama from user a join presensi b on a.nik=b.nik and month(tanggal) = $bulan join device c on b.device=c.id where a.nik = $nik");
+        return $this->db->query("select a.username,b.*,c.nama,a.nik from user a join presensi b on a.nik=b.nik and month(tanggal) = $bulan join device c on b.device=c.id where a.nik = $nik");
     }
 }

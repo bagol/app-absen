@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - Absen Total Buah Segar</title>
+        <title>SIA Total Buah Segar </title>
         <link href="<?=base_url("assets/sb-admin/dist/css/styles.css") ?>" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -15,37 +15,30 @@
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
+                    <?php if ($this->session->flashdata("msg_err")) { ?>
+                            <div class="alert alert-danger mt-1"><?=$this->session->flashdata("msg_err") ?></div>
+                        <?php } elseif ($this->session->flashdata("msg_scc")) { ?>
+                            <div class="alert alert-success mt-1"><?=$this->session->flashdata("msg_scc") ?></div>
+                        <?php } ?>
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header text-center"><img src="<?=base_url("assets/images/logo/logo.png") ?>" width="150px" alt="logo"></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Reset Password</h3></div>
                                     <div class="card-body">
-                                    <?php if ($this->session->flashdata("msg_err")) { ?>
-                                        <div class="alert alert-danger mt-1"><?=$this->session->flashdata("msg_err") ?></div>
-                                    <?php } ?>
-                                        <form action="<?=base_url("Auth/login") ?>" method="post">
+                                        <div class="small mb-3 text-muted">Masukan NIK Untuk mereset password.</div>
+                                        <form action="<?=base_url("Auth/resetPassword") ?>" method="post">
                                             <div class="form-group">
-                                                <label class="small mb-1" for="username">Username</label>
-                                                <input class="form-control py-4" name="username" id="username" type="text" placeholder="Masukan username" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input class="form-control py-4" name="password" id="inputPassword" type="password" placeholder="Masukan password" />
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input" id="lihat" type="checkbox" />
-                                                    <label class="custom-control-label" for="lihat">Lihat password</label>
-                                                </div>
+                                                <label class="small mb-1" for="nik">NIK</label>
+                                                <input class="form-control py-4" name="nik" id="nik" type="text" aria-describedby="nik" placeholder="Masukan NIK anda" minlength="16" maxlength="16" />
                                             </div>
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="<?=base_url("Auth/lupaPassword") ?>">Lupa Password?</a>
-                                                <button type="submit" class="btn btn-primary">Login</button>
+                                                <a class="small" href="<?=base_url("Auth") ?>">Kembali ke halaman login</a>
+                                                <button class="btn btn-primary" type="submit">Reset Password</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small">created by ibnu fajar yusuf</div>
+                                        <div class="small">Created By Ibnu Fajar Yusuf</div>
                                     </div>
                                 </div>
                             </div>
@@ -71,16 +64,5 @@
         <script src="<?=base_url("assets/js/jquery.js") ?>" crossorigin="anonymous"></script>
         <script src="<?=base_url("assets/js/bootstrap.js") ?>" crossorigin="anonymous"></script>
         <script src="<?=base_url("assets/sb-admin/dist/js/scripts.js") ?>"></script>
-        <script>
-          const lihat = document.querySelector("#lihat");
-          const password = document.querySelector("#inputPassword");
-          lihat.addEventListener("change",()=>{
-            if(lihat.checked == true){
-              password.type = "text";
-            }else{
-              password.type = "password";
-            }
-          })
-        </script>
     </body>
 </html>

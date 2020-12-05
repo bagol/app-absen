@@ -88,4 +88,37 @@ class Auth extends CI_Controller
             redirect("Auth/Device");
         }
     }
+
+    public function resetPassword()
+    {
+        $this->load->model("User_model");
+        $nik = $this->input->post("nik");
+
+        if ($nik != null) {
+            $dataUser = $this->User_model->find(['nik' => $nik]);
+            if ($dataUser->num_rows() > 0) {
+                $dataUser = $dataUser->result_array();
+                $email    = $dataUser[0]['email'];
+                $newPw    = explode("@", $email);
+                $newPw    = $newPw[0] . "123";
+                $newPw    = password_hash($newPw, PASSWORD_BCRYPT, ['const' => 12]);
+                if ($this->User_model->edit(['nik' => $nik], ['password' => $newPw])) {
+                    $this->session->set_flashdata("msg_scc", "password Penggguna disetel ulang menggunakan email + 123");
+                } else {
+                    $this->session->set_flashdata("msg_err", "terjadi kesalahan : " . $this->db->error());
+                }
+            } else {
+                $this->session->set_flashdata("msg_err", "NIK tidak diketahui");
+            }
+
+        } else {
+            $this->session->set_flashdata("msg_err", "NIK tidak boleh kosong");
+        }
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function lupaPassword()
+    {
+        $this->load->view("Auth/lupaPassword");
+    }
 }

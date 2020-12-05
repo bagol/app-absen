@@ -173,10 +173,35 @@ class Presensi extends CI_Controller
     {
         $nik = $this->input->post("nik");
         if ($nik !== null) {
+            $data['nik']   = $nik;
             $bulan         = $this->input->post("bulan");
+            $data['ket']   = "Bulan " . $bulan . " tahun " . date("Y");
             $data['datas'] = $this->Absen_model->detailAbsen($nik, $bulan)->result_array();
             $data['title'] = "Detail Absen Pegawai";
             $data['bc']    = "/Detail Absen pegawai";
+            $this->load->view("layout/header", $data);
+            $this->load->view("Report/detail_absen");
+            $this->load->view("layout/footer");
+        } else {
+            $this->session->set_flashdata("msg_err", "nik tidak boleh kosong");
+            redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+
+    public function laporanPribadi()
+    {
+        $nik = $this->session->userdata("nik");
+
+        if ($nik !== null) {
+            $data['nik'] = $nik;
+            $bulan       = $this->input->post("bulan");
+            if ($bulan == null) {
+                $bulan = date("m");
+            }
+            $data['ket']   = "Bulan " . $bulan . " tahun " . date("Y");
+            $data['datas'] = $this->Absen_model->detailAbsen($nik, $bulan)->result_array();
+            $data['title'] = "Detail Absen " . $this->session->userdata("username");
+            $data['bc']    = "/Detail Absen ";
             $this->load->view("layout/header", $data);
             $this->load->view("Report/detail_absen");
             $this->load->view("layout/footer");

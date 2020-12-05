@@ -65,7 +65,7 @@
         <div class="collapse" id="Laporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
             <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link" href="<?=base_url("Admin/laporan_pegawai") ?>">Pegawai</a>
-                <a class="nav-link" href="">Pribadi</a>
+                <a class="nav-link" href="<?=base_url("Presensi/laporanPribadi") ?>">Pribadi</a>
             </nav>
         </div>
     <!-- end menu -->
@@ -85,8 +85,8 @@
             </a>
             <div class="collapse" id="Absen" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="<?=base_url("Karyawan/absen/pagi") ?>">Pagi</a>
-                    <a class="nav-link" href="<?=base_url("Karyawan/absen/siang") ?>">Siang</a>
+                    <a class="nav-link" href="<?=base_url("Karyawan/absen/1") ?>">Pagi</a>
+                    <a class="nav-link" href="<?=base_url("Karyawan/absen/2") ?>">Siang</a>
                 </nav>
             </div>
         <div class="sb-sidenav-menu-heading">Menu</div>
@@ -98,7 +98,7 @@
             </a>
             <div class="collapse" id="Laporan" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="">Pribadi</a>
+                    <a class="nav-link" href="<?=base_url("Presensi/laporanPribadi") ?>">Pribadi</a>
                 </nav>
             </div>
     <!-- end menu -->

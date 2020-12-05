@@ -169,7 +169,7 @@ class User extends CI_Controller
             }
 
         } else {
-            $this->session->set_flashdata("msg_err", "id tidak boleh kosong");
+            $this->session->set_flashdata("msg_err", "NIK tidak boleh kosong");
         }
         redirect($_SERVER['HTTP_REFERER']);
     }
